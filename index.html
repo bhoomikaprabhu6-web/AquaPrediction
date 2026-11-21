@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AquaPredict - Water Intelligence</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg,#061b32,#125477);
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 25px;
+            text-align: center;
+            background: #092b45;
+        }
+
+        header h1 {
+            color: #45d9ff;
+            font-size: 38px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 30px;
+            background: #123c58;
+            border-radius: 18px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 18px;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 7px;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            margin-top: 25px;
+            border: none;
+            border-radius: 8px;
+            background: #00b4d8;
+            color: white;
+            font-weight: bold;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #092b45;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        @media(max-width:650px) {
+            .grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>💧 AquaPredict</h1>
+    <p>Smart Water Quality Prediction System</p>
+</header>
+
+<div class="container">
+
+    <h2>Water Quality Analysis</h2>
+    <p>Enter the water sample parameters below.</p>
+
+    <form method="POST">
+
+        <div class="grid">
+
+            {% for feature in features %}
+            <div>
+                <label>{{ feature }}</label>
+                <input
+                    type="number"
+                    name="{{ feature }}"
+                    step="any"
+                    min="0"
+                    required
+                    placeholder="Enter {{ feature }}"
+                >
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <button type="submit">
+            ANALYZE WATER QUALITY
+        </button>
+
+    </form>
+
+    {% if result %}
+    <div class="result">
+        <h2>{{ result }}</h2>
+
+        {% if confidence is not none %}
+        <h3>Prediction confidence: {{ confidence }}%</h3>
+        <p>
+            This is a machine learning estimate,
+            not a certified drinking-water safety test.
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
